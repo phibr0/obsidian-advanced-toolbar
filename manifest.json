@@ -1,0 +1,10 @@
+{
+	"id": "advanced-toolbar",
+	"name": "Advanced Mobile Toolbar",
+	"version": "1.0.1",
+	"minAppVersion": "0.9.12",
+	"description": "Enhances the Toolbar for Obsidian Mobile.",
+	"author": "phibr0",
+	"authorUrl": "https://obsidian.md/about",
+	"isDesktopOnly": false
+}
