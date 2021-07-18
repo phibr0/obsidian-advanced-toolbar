@@ -1,17 +1,17 @@
-import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { Platform, Plugin } from 'obsidian';
 
 export default class AdvancedToolbar extends Plugin {
 
 	async onload() {
 		console.log('loading plugin');
 
-		//@ts-ignore
-		if(this.app.isMobile){
+		if(Platform.isMobile){
+			//@ts-ignore
+			const toolbar = this.app.mobileToolbar;
 			this.registerDomEvent(window, 'resize', () => {
-				//@ts-ignore
-				if(!this.app.mobileToolbar.isOpen){
+				if(!toolbar.isOpen && this.app.workspace.activeLeaf?.getViewState().state?.mode == "source"){
 					//@ts-ignore
-					this.app.mobileToolbar.open();
+					toolbar.open();
 				}
 			});
 		}
