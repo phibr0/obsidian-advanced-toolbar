@@ -1,10 +1,11 @@
 # Obsidian Advanced Toolbar Plugin [![GitHub tag (Latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-advanced-toolbar)](https://github.com/phibr0/obsidian-advanced-toolbar/releases) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-advanced-toolbar/total)
 
 This Plugin enhances the Mobile Toolbar, enabling it to be always visible and to show two Rows at the Same time.
+
 ## How to install
 
 1. Go to **Community Plugins** in your [Obsidian](https://www.obsidian.md) Settings and **disable** Safe Mode
-2. Click on **Browse** and search for “Obsidian Advanced Toolbar”
+2. Click on **Browse** and search for „Obsidian Advanced Toolbar“
 3. Click install
 4. Toggle the Plugin on in the **Community Plugins** Tab
 

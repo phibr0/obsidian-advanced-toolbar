@@ -1,13 +1,27 @@
-.mobile-toolbar{
+.AT-Double .mobile-toolbar{
     height: 96px !important;   
 }
 
-.mobile-toolbar-options-container{
+.AT-Double .mobile-toolbar-options-container{
     height: 96px !important;
     flex-wrap: wrap;
     flex-direction: column;
 }
 
-.mobile-toolbar-option{
+.AT-Double .mobile-toolbar-option{
+    height: 48px;
+}
+
+.AT-Triple .mobile-toolbar{
+    height: 144px !important;   
+}
+
+.AT-Triple .mobile-toolbar-options-container{
+    height: 144px !important;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.AT-Triple .mobile-toolbar-option{
     height: 48px;
 }
