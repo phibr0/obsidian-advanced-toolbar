@@ -1,6 +1,8 @@
+<img align="right" width="320"  src="https://i.imgur.com/5rFEDyg.png">
+
 # Obsidian Advanced Toolbar Plugin [![GitHub tag (Latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-advanced-toolbar)](https://github.com/phibr0/obsidian-advanced-toolbar/releases) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-advanced-toolbar/total)
 
-This Plugin enhances the Mobile Toolbar, enabling it to be always visible and to show two Rows at the Same time.
+This Plugin enhances the Mobile Toolbar, enabling it to be always visible and to show multiple Rows at the same time.
 
 ## How to install
 
