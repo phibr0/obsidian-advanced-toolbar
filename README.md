@@ -1,4 +1,4 @@
-<img align="right" width="320"  src="https://i.imgur.com/5rFEDyg.png">
+<img align="right" width="320"  src="https://i.imgur.com/Q5KuoLF.png">
 
 # Obsidian Advanced Toolbar Plugin [![GitHub tag (Latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-advanced-toolbar)](https://github.com/phibr0/obsidian-advanced-toolbar/releases) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-advanced-toolbar/total)
 
