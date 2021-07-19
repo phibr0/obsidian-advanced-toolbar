@@ -25,9 +25,7 @@ export default class AdvancedToolbar extends Plugin {
 			this.registerDomEvent(window, 'resize', this.toolbarHandler);
 			//This supposedly fires when the View Mode Changes from Preview to Source and Vice Versa
 			this.app.workspace.on("layout-change", this.toolbarHandler);
-			this.app.workspace.on("active-leaf-change", () => {
-				//This might not be necessary
-			});
+			//this.app.workspace.on("active-leaf-change", () => {});
 		}
 
 		this.updateStyles()
@@ -46,7 +44,8 @@ export default class AdvancedToolbar extends Plugin {
 	}
 
 	updateStyles() {
-		const c = document.body.classList;
+		const {classList: c, style: s} = document.body;
+		s.setProperty("--at-button-height", (this.settings.rowHeight ?? 48) + "px");
 		c.toggle('AT-Double', this.settings.rowCount === 2);
 		c.toggle('AT-Triple', this.settings.rowCount === 3);
 	}
