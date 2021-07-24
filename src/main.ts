@@ -1,4 +1,4 @@
-import { Platform, Plugin } from 'obsidian';
+import { Command, Notice, Platform, Plugin } from 'obsidian';
 import { ATSettings, DEFAULT_SETTINGS } from './types';
 import ATSettingsTab from './ui/settings/settingsTab';
 
@@ -29,6 +29,7 @@ export default class AdvancedToolbar extends Plugin {
 		}
 
 		this.updateStyles()
+		this.injectIcons();
 	}
 
 	onunload() {
@@ -44,9 +45,46 @@ export default class AdvancedToolbar extends Plugin {
 	}
 
 	updateStyles() {
-		const {classList: c, style: s} = document.body;
+		const { classList: c, style: s } = document.body;
 		s.setProperty("--at-button-height", (this.settings.rowHeight ?? 48) + "px");
-		c.toggle('AT-Double', this.settings.rowCount === 2);
-		c.toggle('AT-Triple', this.settings.rowCount === 3);
+		s.setProperty("--at-row-count", this.settings.rowCount.toString());
+		c.toggle('AT-Multi', this.settings.rowCount > 1);
+	}
+
+	listActiveToolbarCommands(): Array<String> {
+		//@ts-ignore
+		return this.app.vault.getConfig('mobileToolbarCommands');
+	}
+
+	getCommandsWithoutIcons(excludeSelfAdded = false): Command[] {
+		const commands: Command[] = [];
+		this.listActiveToolbarCommands().forEach(id => {
+			//@ts-ignore
+			const c = this.app.commands.commands[id];
+			if (!c.icon) {
+				commands.push(c)
+			}
+		});
+		if (!excludeSelfAdded) {
+			this.listActiveToolbarCommands().forEach(id => {
+				//@ts-ignore
+				const c = this.app.commands.commands[id];
+				if (this.settings.mappedIcons.find(m => m.commandID === c.id)) {
+					commands.push(c);
+				}
+			});
+		}
+		return commands;
+	}
+
+	injectIcons() {
+		this.settings.mappedIcons.forEach(mapped => {
+			try {
+				//@ts-ignore
+				this.app.commands.commands[mapped.commandID].icon = mapped.iconID;
+			} catch (error) {
+				new Notice(error);
+			}
+		});
 	}
 }

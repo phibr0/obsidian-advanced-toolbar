@@ -1,8 +1,11 @@
+/*Variables*/
 .body {
     --at-button-height: 48;
+    --at-row-count: 2;
 }
 
-.mobile-toolbar-options-container {
+/*Multi Row Toolbar*/
+.AT-Multi .mobile-toolbar-options-container {
     flex-flow: column wrap;
 }
 
@@ -10,22 +13,15 @@
     height: var(--at-button-height);
 }
 
-.AT-Double .mobile-toolbar {
-    height: calc(var(--at-button-height) * 2) !important;   
+.AT-Multi .mobile-toolbar {
+    height: calc(var(--at-button-height) * var(--at-row-count)) !important;   
 }
 
-.AT-Double .mobile-toolbar-options-container {
-    height: calc(var(--at-button-height) * 2) !important;
+.AT-Multi .mobile-toolbar-options-container {
+    height: calc(var(--at-button-height) * var(--at-row-count)) !important;
 }
 
-.AT-Triple .mobile-toolbar {
-    height: calc(var(--at-button-height) * 3) !important;   
-}
-
-.AT-Triple .mobile-toolbar-options-container {
-    height: calc(var(--at-button-height) * 3) !important;
-}
-
+/*Additional Stuff*/
 span.setting-item.AT-warning {
     text-align: center;
 }

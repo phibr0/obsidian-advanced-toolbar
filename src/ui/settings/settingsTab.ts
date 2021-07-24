@@ -1,4 +1,4 @@
-import { App, Setting, PluginSettingTab, Platform, Notice } from "obsidian"
+import { App, Setting, PluginSettingTab, Platform, Notice, debounce } from "obsidian"
 import AdvancedToolbar from "src/main";
 
 export default class ATSettingsTab extends PluginSettingTab {
@@ -35,7 +35,7 @@ export default class ATSettingsTab extends PluginSettingTab {
             .setName("Toolbar Row Count")
             .setDesc("Set how many Rows the Mobile Toolbar should have.")
             .addSlider(cb => cb
-                .setLimits(1, 3, 1)
+                .setLimits(1, 5, 1)
                 .setValue(this.plugin.settings.rowCount)
                 .setDynamicTooltip()
                 .onChange(async (value) => {
@@ -44,6 +44,22 @@ export default class ATSettingsTab extends PluginSettingTab {
                     this.plugin.updateStyles();
                 })
             );
+
+        if(Platform.isMobile){
+            this.plugin.getCommandsWithoutIcons().forEach(command => {
+                new Setting(containerEl)
+                    .setName(command.name)
+                    .setDesc(`ID: ${command.id}`)
+                    .addText(cb => {
+                        cb.setValue(this.plugin.settings.mappedIcons.find(value => value.commandID === command.id).iconID)
+                        cb.onChange(async (value) => {
+                            this.plugin.settings.mappedIcons.push({ commandID: command.id, iconID: value });
+                            await this.plugin.saveSettings();
+                            this.plugin.injectIcons();
+                        });
+                    })
+            });
+        }
 
         const advancedEl = containerEl.appendChild(createEl("details"));
         advancedEl.appendChild(createEl("summary", { text: "Advanced Settings" }));
@@ -61,7 +77,7 @@ export default class ATSettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                         this.plugin.updateStyles();
                     } else {
-                        new Notice("Value is not a valid number.")
+                        debounce(() => new Notice("Value is not a valid number."));
                     }
                 })
             );
