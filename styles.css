@@ -25,3 +25,9 @@
 span.setting-item.AT-warning {
     text-align: center;
 }
+
+.AT-guide {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}

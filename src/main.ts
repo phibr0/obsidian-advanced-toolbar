@@ -1,5 +1,6 @@
 import { Command, Notice, Platform, Plugin } from 'obsidian';
 import { ATSettings, DEFAULT_SETTINGS } from './types';
+import { addFeatherIcons } from './ui/icons';
 import ATSettingsTab from './ui/settings/settingsTab';
 
 export default class AdvancedToolbar extends Plugin {
@@ -33,6 +34,8 @@ export default class AdvancedToolbar extends Plugin {
 			this.app.workspace.on("layout-change", this.toolbarHandler);
 			//this.app.workspace.on("active-leaf-change", () => {});
 		}
+
+		addFeatherIcons();
 
 		this.app.workspace.onLayoutReady(() => {
 			this.updateStyles()

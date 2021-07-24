@@ -47,6 +47,17 @@ export default class ATSettingsTab extends PluginSettingTab {
             );
 
         if (Platform.isMobile) {
+            const description = document.createDocumentFragment();
+            description.appendChild(createEl("h3", { text: "Custom Icons" }));
+            const guide = document.createDocumentFragment();
+            guide.createDiv({cls: "AT-guide"}).append(
+                description.appendChild(createEl("span", { text: "You can use all Obsidian Default Icons, or " })),
+                description.appendChild(createEl("a", { text: "Feather Icons", href: "https://feathericons.com/" })),
+                description.appendChild(createEl("span", { text: ". To use Obsidian's Icons just enter it's name and for Feather Icons use the names you can find on their Website prefixed with \"feather-\"" }))
+            )
+            description.appendChild(guide);
+            containerEl.appendChild(description);
+
             this.plugin.getCommandsWithoutIcons().forEach(command => {
                 new Setting(containerEl)
                     .setName(command.name)
@@ -58,7 +69,7 @@ export default class ATSettingsTab extends PluginSettingTab {
                         cb.onChange(async (value) => {
                             this.plugin.log("changed to: " + value);
                             this.plugin.settings.mappedIcons.remove(this.plugin.settings.mappedIcons.find(m => m.commandID === command.id))
-                            this.plugin.settings.mappedIcons.push({commandID: command.id, iconID: value})
+                            this.plugin.settings.mappedIcons.push({ commandID: command.id, iconID: value })
                             await this.plugin.saveSettings();
                             this.plugin.injectIcons();
                         });
