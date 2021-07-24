@@ -3,6 +3,7 @@ export interface ATSettings {
     rowCount: number;
     alwaysShowToolbar: boolean;
     mappedIcons: CommandIconPair[];
+    debugging: boolean;
 }
 
 export const DEFAULT_SETTINGS: ATSettings = {
@@ -10,6 +11,7 @@ export const DEFAULT_SETTINGS: ATSettings = {
     rowCount: 2,
     alwaysShowToolbar: false,
     mappedIcons: [],
+    debugging: false,
 }
 
 export interface CommandIconPair{

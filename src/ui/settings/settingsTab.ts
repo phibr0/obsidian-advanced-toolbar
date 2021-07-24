@@ -1,3 +1,4 @@
+import { faCodeBranch } from "@fortawesome/free-solid-svg-icons";
 import { App, Setting, PluginSettingTab, Platform, Notice, debounce } from "obsidian"
 import AdvancedToolbar from "src/main";
 
@@ -45,15 +46,19 @@ export default class ATSettingsTab extends PluginSettingTab {
                 })
             );
 
-        if(Platform.isMobile){
+        if (Platform.isMobile) {
             this.plugin.getCommandsWithoutIcons().forEach(command => {
                 new Setting(containerEl)
                     .setName(command.name)
                     .setDesc(`ID: ${command.id}`)
                     .addText(cb => {
-                        cb.setValue(this.plugin.settings.mappedIcons.find(value => value.commandID === command.id).iconID)
+                        const iconID = this.plugin.settings.mappedIcons.find(m => m.commandID === command.id)?.iconID ?? "";
+                        cb.setValue(iconID);
+                        this.plugin.log("IconID: " + iconID);
                         cb.onChange(async (value) => {
-                            this.plugin.settings.mappedIcons.push({ commandID: command.id, iconID: value });
+                            this.plugin.log("changed to: " + value);
+                            this.plugin.settings.mappedIcons.remove(this.plugin.settings.mappedIcons.find(m => m.commandID === command.id))
+                            this.plugin.settings.mappedIcons.push({commandID: command.id, iconID: value})
                             await this.plugin.saveSettings();
                             this.plugin.injectIcons();
                         });
@@ -81,5 +86,15 @@ export default class ATSettingsTab extends PluginSettingTab {
                     }
                 })
             );
+        new Setting(advancedEl)
+            .setName("Debugging")
+            .setDesc("Enable Debugging")
+            .addToggle(cb => {
+                cb.setValue(this.plugin.settings.debugging);
+                cb.onChange(async (value) => {
+                    this.plugin.settings.debugging = value;
+                    await this.plugin.saveSettings();
+                })
+            })
     }
 }

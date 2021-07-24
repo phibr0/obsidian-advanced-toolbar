@@ -13,6 +13,12 @@ export default class AdvancedToolbar extends Plugin {
 		}
 	};
 
+	log(message: any) {
+		if (this.settings.debugging) {
+			console.log(message)
+		}
+	}
+
 	async onload() {
 		console.log('loading plugin');
 
@@ -28,8 +34,10 @@ export default class AdvancedToolbar extends Plugin {
 			//this.app.workspace.on("active-leaf-change", () => {});
 		}
 
-		this.updateStyles()
-		this.injectIcons();
+		this.app.workspace.onLayoutReady(() => {
+			this.updateStyles()
+			this.injectIcons();
+		});
 	}
 
 	onunload() {
@@ -51,24 +59,29 @@ export default class AdvancedToolbar extends Plugin {
 		c.toggle('AT-Multi', this.settings.rowCount > 1);
 	}
 
-	listActiveToolbarCommands(): Array<String> {
+	listActiveToolbarCommands(): String[] {
 		//@ts-ignore
-		return this.app.vault.getConfig('mobileToolbarCommands');
+		const activeCommands = this.app.vault.getConfig('mobileToolbarCommands');
+		this.log("listActiveToolbarCommands: " + activeCommands);
+		return activeCommands;
 	}
 
-	getCommandsWithoutIcons(excludeSelfAdded = false): Command[] {
+	getCommandsWithoutIcons(includeSelfAdded = true): Command[] {
+		this.log("getCommandsWithoutIcons");
 		const commands: Command[] = [];
 		this.listActiveToolbarCommands().forEach(id => {
 			//@ts-ignore
 			const c = this.app.commands.commands[id];
-			if (!c.icon) {
-				commands.push(c)
+			if (c && !c.icon) {
+				commands.push(c);
+				this.log("pushed: " + c)
 			}
 		});
-		if (!excludeSelfAdded) {
+		if (includeSelfAdded) {
 			this.listActiveToolbarCommands().forEach(id => {
 				//@ts-ignore
 				const c = this.app.commands.commands[id];
+				this.log(c);
 				if (this.settings.mappedIcons.find(m => m.commandID === c.id)) {
 					commands.push(c);
 				}
