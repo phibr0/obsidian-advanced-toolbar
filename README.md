@@ -11,6 +11,15 @@ Just enter a Name of an Icon into the corresponding Text Field. You can use any 
 
 ![image01.png](assets/image01.png)
 
+## Tips
+
+I recommend using this Plugin together with [@Vinzent03](https://github.com/Vinzent03/)'s [Hotkeys for Templates](https://github.com/Vinzent03/obsidian-hotkeys-for-templates) Plugin which allows you to insert Templates via your Toolbar.
+
+1. Install both this and the Hotkeys for Templates Plugin
+2. In the Settings of the Hotkeys for Templates Plugin enable a Command for a Template
+3. Add it to the Toolbar in the Mobile Section of the Settings
+4. Finally add a fancy Icon using this Plugin
+
 ## How to install
 
 1. Go to **Community Plugins** in your [Obsidian](https://www.obsidian.md) Settings and **disable** Safe Mode
