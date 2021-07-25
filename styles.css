@@ -5,7 +5,7 @@
 }
 
 /*Multi Row Toolbar*/
-.AT-Multi .mobile-toolbar-options-container {
+.AT-multirow .mobile-toolbar-options-container {
     flex-flow: column wrap;
 }
 
@@ -13,11 +13,11 @@
     height: var(--at-button-height);
 }
 
-.AT-Multi .mobile-toolbar {
+.AT-multirow .mobile-toolbar {
     height: calc(var(--at-button-height) * var(--at-row-count)) !important;   
 }
 
-.AT-Multi .mobile-toolbar-options-container {
+.AT-multirow .mobile-toolbar-options-container {
     height: calc(var(--at-button-height) * var(--at-row-count)) !important;
 }
 
@@ -30,4 +30,16 @@ span.setting-item.AT-warning {
     text-align: center;
     margin-bottom: 1rem;
     font-size: 1rem;
+}
+
+.setting-item.extra > .setting-item-info {
+    opacity: 0.65;
+}
+
+a[href="https://www.buymeacoffee.com/phibr0"] > img {
+    height: 2.2em;
+}
+
+a[href="https://www.buymeacoffee.com/phibr0"]{
+    transform: translate(0, 5%);
 }

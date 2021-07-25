@@ -3,6 +3,9 @@ import { addIcon } from "obsidian";
 
 export function addFeatherIcons() {
     Object.values(feather.icons).forEach((i) => {
-        addIcon("feather-" + i.name, i.toSvg({viewBox: "0 0 24 24", width: "100", height: "100"}));
+        const svg = i.toSvg({viewBox: "0 0 24 24", width: "100", height: "100"});
+        //Remove the svg tag: svg.match(/(?<=>).*(?=<\/svg>)/).first()
+        addIcon("feather-" + i.name, svg);
+        console.log(svg);
     });
 }

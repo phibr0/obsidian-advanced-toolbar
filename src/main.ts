@@ -1,4 +1,4 @@
-import { Command, Notice, Platform, Plugin } from 'obsidian';
+import { Command, MarkdownView, Notice, Platform, Plugin } from 'obsidian';
 import { ATSettings, DEFAULT_SETTINGS } from './types';
 import { addFeatherIcons } from './ui/icons';
 import ATSettingsTab from './ui/settings/settingsTab';
@@ -9,7 +9,7 @@ export default class AdvancedToolbar extends Plugin {
 	toolbarHandler = () => {
 		//@ts-ignore The ignore is needed, because the mobileToolbar isn't exposed via obsidian.d.ts
 		const { mobileToolbar: t, workspace: w } = this.app;
-		if (this.settings.alwaysShowToolbar === true && !t.isOpen && w.activeLeaf?.getViewState().state.mode === "source") {
+		if (this.settings.alwaysShowToolbar === true && !t.isOpen && w.getActiveViewOfType(MarkdownView)?.getMode() === 'source') {
 			t.open();
 		}
 	};
@@ -31,7 +31,7 @@ export default class AdvancedToolbar extends Plugin {
 			//This Fires when the on-screen Keyboard opens and *closes*
 			this.registerDomEvent(window, 'resize', this.toolbarHandler);
 			//This supposedly fires when the View Mode Changes from Preview to Source and Vice Versa
-			this.app.workspace.on("layout-change", this.toolbarHandler);
+			this.registerEvent(this.app.workspace.on("layout-change", this.toolbarHandler));
 			//this.app.workspace.on("active-leaf-change", () => {});
 		}
 
@@ -59,7 +59,7 @@ export default class AdvancedToolbar extends Plugin {
 		const { classList: c, style: s } = document.body;
 		s.setProperty("--at-button-height", (this.settings.rowHeight ?? 48) + "px");
 		s.setProperty("--at-row-count", this.settings.rowCount.toString());
-		c.toggle('AT-Multi', this.settings.rowCount > 1);
+		c.toggle('AT-multirow', this.settings.rowCount > 1);
 	}
 
 	listActiveToolbarCommands(): String[] {
