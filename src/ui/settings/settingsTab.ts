@@ -59,7 +59,8 @@ export default class ATSettingsTab extends PluginSettingTab {
                     .setDesc(`ID: ${command.id}`)
                     .addButton(bt => {
                         const iconDiv = bt.buttonEl.createDiv({cls: "AT-settings-icon"})
-                        setIcon(iconDiv, this.plugin.settings.mappedIcons.find(m => m.commandID === command.id).iconID, 20)
+                        const currentIcon = this.plugin.settings.mappedIcons.find(m => m.commandID === command.id)?.iconID;
+                        currentIcon ? setIcon(iconDiv, currentIcon, 20) : bt.setButtonText("No Icon");
                         bt.onClick(() => {
                             new IconPicker(this.plugin, command, this.display).open();
                         })
@@ -123,12 +124,20 @@ export class IconPicker extends FuzzySuggestModal<string>{
         this.setPlaceholder("Pick an Icon");
     }
 
+    private cap(string: string): string {
+        const words = string.split(" ");
+
+        return words.map((word) => {
+            return word[0].toUpperCase() + word.substring(1);
+        }).join(" ");
+    }
+
     getItems(): string[] {
         return this.plugin.iconList;
     }
 
     getItemText(item: string): string {
-        return item.replace("feather-", "");
+        return this.cap(item.replace("feather-", "").replace("-", " "));
     }
 
     renderSuggestion(item: FuzzyMatch<string>, el: HTMLElement): void {
