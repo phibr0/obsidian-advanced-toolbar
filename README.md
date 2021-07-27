@@ -8,8 +8,8 @@ This Plugin enhances the Mobile Toolbar, enabling it to be always visible and to
 
 <img align="right" width="320"  src="assets/image01.png">
 
-To add a Custom Icon open the Plugin's Settings and as long as you have Quick Actions that don't have their own Icons, you can add your own here.
-Just enter a Name of an Icon into the corresponding Text Field. You can use any [Obsidian internal Icon](https://discord.com/channels/686053708261228577/707816848615407697/830916811116642364) or any [Feather Icon](https://feathericons.com/) prefixed with `feather-`.
+You can add Custom Icons (even [Feather Icons](https://feathericons.com/)) to any Quick Actions that dont have their own Icon already (Please let me know if you want to change Icons of every Quick Action).
+For that just go into this Plugin's Settings and if you have any Quick Actions without Icons enabled you can change the Icon via the Button. 
 
 ## Tips
 
