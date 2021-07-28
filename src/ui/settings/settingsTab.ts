@@ -36,9 +36,9 @@ export default class ATSettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName("Toolbar Row Count")
-            .setDesc("Set how many Rows the Mobile Toolbar should have.")
+            .setDesc("Set how many Rows the Mobile Toolbar should have. Set this to 0 to remove the Toolbar.")
             .addSlider(cb => cb
-                .setLimits(1, 5, 1)
+                .setLimits(0, 5, 1)
                 .setValue(this.plugin.settings.rowCount)
                 .setDynamicTooltip()
                 .onChange(async (value) => {

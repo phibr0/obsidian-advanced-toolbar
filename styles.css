@@ -21,6 +21,10 @@
     height: calc(var(--at-button-height) * var(--at-row-count)) !important;
 }
 
+.AT-no-toolbar .mobile-toolbar {
+    display: none;
+}
+
 /*Icon Picker*/
 .AT-icon {
     transform: translateY(3px);

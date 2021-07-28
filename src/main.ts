@@ -61,6 +61,7 @@ export default class AdvancedToolbar extends Plugin {
 		s.setProperty("--at-button-height", (this.settings.rowHeight ?? 48) + "px");
 		s.setProperty("--at-row-count", this.settings.rowCount.toString());
 		c.toggle('AT-multirow', this.settings.rowCount > 1);
+		c.toggle('AT-no-toolbar', this.settings.rowCount === 0);
 	}
 
 	listActiveToolbarCommands(): String[] {
