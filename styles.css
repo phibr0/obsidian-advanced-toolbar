@@ -44,8 +44,12 @@ span.setting-item.AT-warning {
     text-align: center;
 }
 
-.setting-item.extra > .setting-item-info {
+.setting-item.AT-extra > .setting-item-info {
     opacity: 0.65;
+}
+
+.is-mobile .setting-item.AT-extra > .setting-item-control{
+    justify-content: center !important;
 }
 
 a[href="https://www.buymeacoffee.com/phibr0"] > img {

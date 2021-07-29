@@ -71,6 +71,15 @@ export default class AdvancedToolbar extends Plugin {
 		return activeCommands;
 	}
 
+	getCommands(): Command[] {
+		const commands: Command[] = [];
+		this.listActiveToolbarCommands().forEach(id => {
+			//@ts-ignore
+			commands.push(this.app.commands.commands[id]);
+		})
+		return commands;
+	}
+
 	getCommandsWithoutIcons(includeSelfAdded = true): Command[] {
 		this.log("getCommandsWithoutIcons");
 		const commands: Command[] = [];

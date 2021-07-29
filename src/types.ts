@@ -4,6 +4,7 @@ export interface ATSettings {
     alwaysShowToolbar: boolean;
     mappedIcons: CommandIconPair[];
     debugging: boolean;
+    allowStylingOfAllActions: boolean;
 }
 
 export const DEFAULT_SETTINGS: ATSettings = {
@@ -12,6 +13,7 @@ export const DEFAULT_SETTINGS: ATSettings = {
     alwaysShowToolbar: false,
     mappedIcons: [],
     debugging: false,
+    allowStylingOfAllActions: false,
 }
 
 export interface CommandIconPair{

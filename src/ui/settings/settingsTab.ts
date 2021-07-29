@@ -1,4 +1,4 @@
-import { App, Setting, PluginSettingTab, Platform, FuzzySuggestModal, FuzzyMatch, setIcon, Command } from "obsidian"
+import { App, Setting, PluginSettingTab, Platform, FuzzySuggestModal, FuzzyMatch, setIcon, Command, Notice } from "obsidian"
 import AdvancedToolbar from "src/main";
 
 export default class ATSettingsTab extends PluginSettingTab {
@@ -48,24 +48,82 @@ export default class ATSettingsTab extends PluginSettingTab {
                 })
             );
 
+        new Setting(containerEl)
+            .setName("Allow Styling of all Quick Actions")
+            .setDesc("If enabled you can change the Icons of all Quick Actions, not only these that don't provide their own Icon.")
+            .addToggle(cb => cb
+                .setValue(this.plugin.settings.allowStylingOfAllActions)
+                .onChange(async (value) => {
+                    this.plugin.settings.allowStylingOfAllActions = value;
+                    await this.plugin.saveSettings();
+                    this.display();
+                })
+            );
+
         if (Platform.isMobile) {
             const description = document.createDocumentFragment();
             description.appendChild(createEl("h3", { text: "Custom Icons" }));
             containerEl.appendChild(description);
 
-            this.plugin.getCommandsWithoutIcons().forEach(command => {
-                new Setting(containerEl)
-                    .setName(command.name)
-                    .setDesc(`ID: ${command.id}`)
-                    .addButton(bt => {
-                        const iconDiv = bt.buttonEl.createDiv({cls: "AT-settings-icon"})
-                        const currentIcon = this.plugin.settings.mappedIcons.find(m => m.commandID === command.id)?.iconID;
-                        currentIcon ? setIcon(iconDiv, currentIcon, 20) : bt.setButtonText("No Icon");
-                        bt.onClick(() => {
-                            new IconPicker(this.plugin, command, this.display).open();
+            if (this.plugin.settings.allowStylingOfAllActions) {
+                this.plugin.getCommands().forEach(command => {
+                    new Setting(containerEl)
+                        .setName(command.name)
+                        .setDesc(`ID: ${command.id}`)
+                        .addButton(bt => {
+                            const iconDiv = bt.buttonEl.createDiv({ cls: "AT-settings-icon" });
+                            if (command.icon) {
+                                setIcon(iconDiv, command.icon, 20);
+                            } else {
+                                const currentIcon = this.plugin.settings.mappedIcons.find(m => m.commandID === command.id)?.iconID;
+                                currentIcon ? setIcon(iconDiv, currentIcon, 20) : bt.setButtonText("No Icon");
+                            }
+                            bt.onClick(() => {
+                                new IconPicker(this.plugin, command, this.display).open();
+                            })
                         })
-                    });
-            });
+                        .addExtraButton(bt => {
+                            bt.setIcon("reset")
+                                .setTooltip("Reset to default - Requires a restart")
+                                .onClick(async () => {
+                                    this.plugin.settings.mappedIcons.remove(this.plugin.settings.mappedIcons.find((p) => p.iconID === command.icon));
+                                    command.icon = undefined;
+                                    await this.plugin.saveSettings();
+                                    this.display();
+                                    new Notice("If the default Icon doesn't appear, you might have to restart Obsidian.")
+                                });
+                        });
+                });
+            } else {
+                this.plugin.getCommandsWithoutIcons().forEach(command => {
+                    new Setting(containerEl)
+                        .setName(command.name)
+                        .setDesc(`ID: ${command.id}`)
+                        .addButton(bt => {
+                            const iconDiv = bt.buttonEl.createDiv({ cls: "AT-settings-icon" });
+                            if (command.icon) {
+                                setIcon(iconDiv, command.icon, 20);
+                            } else {
+                                const currentIcon = this.plugin.settings.mappedIcons.find(m => m.commandID === command.id)?.iconID;
+                                currentIcon ? setIcon(iconDiv, currentIcon, 20) : bt.setButtonText("No Icon");
+                            }
+                            bt.onClick(() => {
+                                new IconPicker(this.plugin, command, this.display).open();
+                            });
+                        })
+                        .addExtraButton(bt => {
+                            bt.setIcon("reset")
+                                .setTooltip("Reset to default - Requires a restart")
+                                .onClick(async () => {
+                                    this.plugin.settings.mappedIcons.remove(this.plugin.settings.mappedIcons.find((p) => p.iconID === command.icon));
+                                    command.icon = undefined;
+                                    await this.plugin.saveSettings();
+                                    this.display();
+                                    new Notice("If the default Icon doesn't appear, you might have to restart Obsidian.")
+                                });
+                        });
+                });
+            }
         }
 
         const advancedEl = containerEl.appendChild(createEl("details"));
@@ -79,17 +137,12 @@ export default class ATSettingsTab extends PluginSettingTab {
                 .setPlaceholder("48")
                 .onChange(async (value) => {
                     const height = Number(value);
-                    if (!isNaN(height)) {
-                        if(cb.inputEl.hasClass("is-invalid")) {
-                            cb.inputEl.removeClass("is-invalid")
-                        }
+                    const invalid = isNaN(height);
+                    cb.inputEl.toggleClass("is-invalid", invalid)
+                    if (invalid) {
                         this.plugin.settings.rowHeight = height;
                         await this.plugin.saveSettings();
                         this.plugin.updateStyles();
-                    } else {
-                        if(!cb.inputEl.hasClass("is-invalid")) {
-                            cb.inputEl.addClass("is-invalid")
-                        }
                     }
                 })
             );
@@ -106,7 +159,7 @@ export default class ATSettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Donate')
             .setDesc('If you like this Plugin, consider donating to support continued development:')
-            .setClass("extra")
+            .setClass("AT-extra")
             .addButton((bt) => {
                 bt.buttonEl.outerHTML = `<a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=phibr0&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>`;
             });
