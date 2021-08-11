@@ -1,4 +1,4 @@
-import { Command, MarkdownView, Notice, Platform, Plugin } from 'obsidian';
+import { App, Command, MarkdownView, Notice, Platform, Plugin, TFile } from 'obsidian';
 import { ATSettings, DEFAULT_SETTINGS } from './types';
 import { addFeatherIcons } from './ui/icons';
 import ATSettingsTab from './ui/settings/settingsTab';
@@ -41,6 +41,13 @@ export default class AdvancedToolbar extends Plugin {
 		this.app.workspace.onLayoutReady(() => {
 			this.updateStyles()
 			this.injectIcons();
+			//@ts-ignore
+			if(this.app.mobileToolbar.isOpen()){
+				//@ts-ignore
+				this.app.mobileToolbar.close();
+				//@ts-ignore
+				this.app.mobileToolbar.open();
+			}
 		});
 	}
 
@@ -113,5 +120,9 @@ export default class AdvancedToolbar extends Plugin {
 				new Notice(error);
 			}
 		});
+	}
+
+	injectHoverTooltips(){
+		
 	}
 }

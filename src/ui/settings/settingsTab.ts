@@ -190,7 +190,7 @@ export class IconPicker extends FuzzySuggestModal<string>{
     }
 
     getItemText(item: string): string {
-        return this.cap(item.replace("feather-", "").replace("-", " "));
+        return this.cap(item.replace("feather-", "").replace(/-/ig, " "));
     }
 
     renderSuggestion(item: FuzzyMatch<string>, el: HTMLElement): void {
