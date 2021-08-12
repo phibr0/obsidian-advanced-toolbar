@@ -5,6 +5,7 @@ export interface ATSettings {
     mappedIcons: CommandIconPair[];
     debugging: boolean;
     allowStylingOfAllActions: boolean;
+    tooltips: boolean;
 }
 
 export const DEFAULT_SETTINGS: ATSettings = {
@@ -14,6 +15,7 @@ export const DEFAULT_SETTINGS: ATSettings = {
     mappedIcons: [],
     debugging: false,
     allowStylingOfAllActions: false,
+    tooltips: false,
 }
 
 export interface CommandIconPair{

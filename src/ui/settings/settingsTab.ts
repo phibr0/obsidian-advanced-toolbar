@@ -49,6 +49,17 @@ export default class ATSettingsTab extends PluginSettingTab {
             );
 
         new Setting(containerEl)
+            .setName("Show Tooltips for Quick Actions")
+            .setDesc("Show Tooltips over the Quick Actions on hover. This helps to more easily identify Commands.")
+            .addToggle(cb => {
+                cb.setValue(this.plugin.settings.tooltips)
+                .onChange(async (value) => {
+                    this.plugin.settings.tooltips = value;
+                    await this.plugin.saveSettings();
+                })
+            })
+
+        new Setting(containerEl)
             .setName("Allow Styling of all Quick Actions")
             .setDesc("If enabled you can change the Icons of all Quick Actions, not only these that don't provide their own Icon.")
             .addToggle(cb => cb

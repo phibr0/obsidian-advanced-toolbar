@@ -39,16 +39,26 @@ export default class AdvancedToolbar extends Plugin {
 		addFeatherIcons(this.iconList);
 
 		this.app.workspace.onLayoutReady(() => {
-			this.updateStyles()
+			this.updateStyles();
 			this.injectIcons();
 			//@ts-ignore
-			if(this.app.mobileToolbar.isOpen()){
+			if (this.app.mobileToolbar.isOpen) {
 				//@ts-ignore
 				this.app.mobileToolbar.close();
 				//@ts-ignore
 				this.app.mobileToolbar.open();
 			}
+			//Toolbar Opened Event:
+			new MutationObserver((event) => {
+				//@ts-ignore
+				if ((event.first().addedNodes as NodeList).item(0)?.hasClass("mobile-toolbar")) {
+					dispatchEvent(new CustomEvent("toolbarOpened", { detail: { "toolbar": event.first().addedNodes.item(0) } }))
+				}
+			}).observe(document.body.getElementsByClassName("app-container").item(0), { childList: true });
 		});
+
+		addEventListener("toolbarOpened", (e: CustomEvent) => this.injectHoverTooltips(e.detail.toolbar));
+
 	}
 
 	onunload() {
@@ -122,7 +132,15 @@ export default class AdvancedToolbar extends Plugin {
 		});
 	}
 
-	injectHoverTooltips(){
-		
+	injectHoverTooltips(el: HTMLElement) {
+		if (this.settings.tooltips) {
+			const commands = this.getCommands();
+			el.firstChild.childNodes.forEach((child: HTMLElement, i: number) => {
+				child.setAttrs({
+					"aria-label": commands[i].name.replace(/.*: /, ""),
+					"aria-label-position": "top"
+				})
+			});
+		}
 	}
 }
