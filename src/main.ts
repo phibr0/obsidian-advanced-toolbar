@@ -41,13 +41,15 @@ export default class AdvancedToolbar extends Plugin {
 		this.app.workspace.onLayoutReady(() => {
 			this.updateStyles();
 			this.injectIcons();
-			//@ts-ignore
-			if (this.app.mobileToolbar.isOpen) {
+			setTimeout(() => {
 				//@ts-ignore
-				this.app.mobileToolbar.close();
-				//@ts-ignore
-				this.app.mobileToolbar.open();
-			}
+				if (this.app.mobileToolbar.isOpen) {
+					//@ts-ignore
+					this.app.mobileToolbar.close();
+					//@ts-ignore
+					this.app.mobileToolbar.open();
+				}
+			}, 50);
 			//Toolbar Opened Event:
 			new MutationObserver((event) => {
 				//@ts-ignore
