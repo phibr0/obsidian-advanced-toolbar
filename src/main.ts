@@ -9,9 +9,9 @@ export default class AdvancedToolbar extends Plugin {
 
 	toolbarHandler = () => {
 		//@ts-ignore The ignore is needed, because the mobileToolbar isn't exposed via obsidian.d.ts
-		const { mobileToolbar: t, workspace: w } = this.app;
-		if (this.settings.alwaysShowToolbar === true && !t.isOpen && w.getActiveViewOfType(MarkdownView)?.getMode() === 'source') {
-			t.open();
+		const { mobileToolbar: toolbar} = this.app;
+		if (this.settings.alwaysShowToolbar === true && !toolbar.isOpen) {
+			toolbar.open();
 		}
 	};
 

@@ -50,7 +50,7 @@ export default class ATSettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName("Show Tooltips for Quick Actions")
-            .setDesc("Show Tooltips over the Quick Actions on hover. This helps to more easily identify Commands.")
+            .setDesc("Show Tooltips over the Quick Actions on hover. This helps to more easily identify Commands. IMPORTANT: Only works with a Stylus/Apple Pen/Mouse")
             .addToggle(cb => {
                 cb.setValue(this.plugin.settings.tooltips)
                 .onChange(async (value) => {
@@ -177,7 +177,7 @@ export default class ATSettingsTab extends PluginSettingTab {
     }
 }
 
-export class IconPicker extends FuzzySuggestModal<string>{
+export class IconPicker extends FuzzySuggestModal<string> {
     plugin: AdvancedToolbar;
     command: Command;
 
