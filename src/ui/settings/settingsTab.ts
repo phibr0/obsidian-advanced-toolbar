@@ -150,7 +150,7 @@ export default class ATSettingsTab extends PluginSettingTab {
                     const height = Number(value);
                     const invalid = isNaN(height);
                     cb.inputEl.toggleClass("is-invalid", invalid)
-                    if (invalid) {
+                    if (!invalid) {
                         this.plugin.settings.rowHeight = height;
                         await this.plugin.saveSettings();
                         this.plugin.updateStyles();
