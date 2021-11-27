@@ -22,7 +22,7 @@ export default class AdvancedToolbar extends Plugin {
 	}
 
 	async onload() {
-		console.log('loading plugin');
+		console.log('Loading Advanced Mobile Toolbar plugin.');
 
 		await this.loadSettings();
 
@@ -34,6 +34,10 @@ export default class AdvancedToolbar extends Plugin {
 			//This supposedly fires when the View Mode Changes from Preview to Source and Vice Versa
 			this.registerEvent(this.app.workspace.on("layout-change", this.toolbarHandler));
 			//this.app.workspace.on("active-leaf-change", () => {});
+		}
+		else {
+			console.log('Advanced Mobile Toolbar detected desktop Obsidian and is aborting. You still have access to change the settings.')
+			return
 		}
 
 		addFeatherIcons(this.iconList);
@@ -64,7 +68,7 @@ export default class AdvancedToolbar extends Plugin {
 	}
 
 	onunload() {
-		console.log('unloading plugin');
+		console.log('Unloading Advanced Mobile Toolbar plugin.');
 	}
 
 	async loadSettings() {
