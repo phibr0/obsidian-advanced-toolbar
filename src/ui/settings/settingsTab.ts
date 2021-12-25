@@ -158,6 +158,23 @@ export default class ATSettingsTab extends PluginSettingTab {
                 })
             );
             new Setting(advancedEl)
+            .setName("Button Width")
+            .setDesc("Change the Width of each Button inside the Mobile Toolbar (in px).")
+            .addText(cb => cb
+                .setValue(this.plugin.settings.buttonWidth?.toString() ?? "48")
+                .setPlaceholder("48")
+                .onChange(async (value) => {
+                    const width = Number(value);
+                    const invalid = isNaN(width);
+                    cb.inputEl.toggleClass("is-invalid", invalid)
+                    if (!invalid) {
+                        this.plugin.settings.buttonWidth = width;
+                        await this.plugin.saveSettings();
+                        this.plugin.updateStyles();
+                    }
+                })
+            );
+            new Setting(advancedEl)
             .setName("Toolbar Extra Spacing")
             .setDesc("Some Themes need extra spacing in the toolbar. If your Toolbar doesn't wrap properly, try increasing this value.")
             .addSlider(cb => cb

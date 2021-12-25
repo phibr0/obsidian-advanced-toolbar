@@ -12,6 +12,7 @@
 
 .mobile-toolbar-option {
     height: var(--at-button-height);
+    width: var(--at-button-width);
 }
 
 .AT-multirow .mobile-toolbar {
