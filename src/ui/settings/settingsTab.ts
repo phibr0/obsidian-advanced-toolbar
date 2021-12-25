@@ -34,7 +34,7 @@ export default class ATSettingsTab extends PluginSettingTab {
                 })
             );
 
-        new Setting(containerEl)
+            new Setting(containerEl)
             .setName("Toolbar Row Count")
             .setDesc("Set how many Rows the Mobile Toolbar should have. Set this to 0 to remove the Toolbar.")
             .addSlider(cb => cb
@@ -157,6 +157,19 @@ export default class ATSettingsTab extends PluginSettingTab {
                     }
                 })
             );
+            new Setting(advancedEl)
+            .setName("Toolbar Extra Spacing")
+            .setDesc("Some Themes need extra spacing in the toolbar. If your Toolbar doesn't wrap properly, try increasing this value.")
+            .addSlider(cb => cb
+                .setLimits(0, 64, 1)
+                .setValue(this.plugin.settings.spacing)
+                .setDynamicTooltip()
+                .onChange(async (value) => {
+                    this.plugin.settings.spacing = value;
+                    await this.plugin.saveSettings();
+                    this.plugin.updateStyles();
+                })
+            );     
         new Setting(advancedEl)
             .setName("Debugging")
             .setDesc("Enable Debugging")
