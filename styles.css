@@ -11,7 +11,7 @@
 }
 
 .AT-multirow.AT-column .mobile-toolbar-options-container { 
-    flex-flow: column wrap; 
+    flex-flow: row wrap; 
     overflow-y: auto;
 }
 
