@@ -6,8 +6,13 @@
 }
 
 /*Multi Row Toolbar*/
-.AT-multirow .mobile-toolbar-options-container {
+.AT-multirow.AT-row .mobile-toolbar-options-container {
     flex-flow: column wrap;
+}
+
+.AT-multirow.AT-column .mobile-toolbar-options-container { 
+    flex-flow: column wrap; 
+    overflow-y: auto;
 }
 
 .mobile-toolbar-option {

@@ -34,7 +34,7 @@ export default class ATSettingsTab extends PluginSettingTab {
                 })
             );
 
-            new Setting(containerEl)
+        new Setting(containerEl)
             .setName("Toolbar Row Count")
             .setDesc("Set how many Rows the Mobile Toolbar should have. Set this to 0 to remove the Toolbar.")
             .addSlider(cb => cb
@@ -49,14 +49,26 @@ export default class ATSettingsTab extends PluginSettingTab {
             );
 
         new Setting(containerEl)
+            .setName("Column Layout")
+            .setDesc("Use a column based layout instead of the default row. This makes it easier to arrange the Commands.")
+            .addToggle(cb => cb
+                .setValue(this.plugin.settings.columnLayout)
+                .onChange(async value => {
+                    this.plugin.settings.columnLayout = value;
+                    await this.plugin.saveSettings();
+                    this.plugin.updateStyles();
+                })
+            );
+
+        new Setting(containerEl)
             .setName("Show Tooltips for Quick Actions")
             .setDesc("Show Tooltips over the Quick Actions on hover. This helps to more easily identify Commands. IMPORTANT: Only works with a Stylus/Apple Pen/Mouse")
             .addToggle(cb => {
                 cb.setValue(this.plugin.settings.tooltips)
-                .onChange(async (value) => {
-                    this.plugin.settings.tooltips = value;
-                    await this.plugin.saveSettings();
-                })
+                    .onChange(async (value) => {
+                        this.plugin.settings.tooltips = value;
+                        await this.plugin.saveSettings();
+                    })
             })
 
         new Setting(containerEl)
@@ -157,7 +169,7 @@ export default class ATSettingsTab extends PluginSettingTab {
                     }
                 })
             );
-            new Setting(advancedEl)
+        new Setting(advancedEl)
             .setName("Button Width")
             .setDesc("Change the Width of each Button inside the Mobile Toolbar (in px).")
             .addText(cb => cb
@@ -174,7 +186,7 @@ export default class ATSettingsTab extends PluginSettingTab {
                     }
                 })
             );
-            new Setting(advancedEl)
+        new Setting(advancedEl)
             .setName("Toolbar Extra Spacing")
             .setDesc("Some Themes need extra spacing in the toolbar. If your Toolbar doesn't wrap properly, try increasing this value.")
             .addSlider(cb => cb
@@ -186,7 +198,7 @@ export default class ATSettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                     this.plugin.updateStyles();
                 })
-            );     
+            );
         new Setting(advancedEl)
             .setName("Debugging")
             .setDesc("Enable Debugging")

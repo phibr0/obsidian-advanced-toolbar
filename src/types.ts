@@ -3,6 +3,7 @@ export interface ATSettings {
     rowCount: number;
     spacing: number;
     buttonWidth: number;
+    columnLayout: boolean;
     alwaysShowToolbar: boolean;
     mappedIcons: CommandIconPair[];
     debugging: boolean;
@@ -15,6 +16,7 @@ export const DEFAULT_SETTINGS: ATSettings = {
     rowCount: 2,
     spacing: 0,
     buttonWidth: 48,
+    columnLayout: false,
     alwaysShowToolbar: false,
     mappedIcons: [],
     debugging: false,
