@@ -28,6 +28,9 @@ export default class AdvancedToolbar extends Plugin {
 
 		this.addSettingTab(new ATSettingsTab(this.app, this));
 
+		document.body.addClass('advanced-toolbar');
+		addFeatherIcons(this.iconList);
+
 		if (Platform.isMobile) {
 			//This Fires when the on-screen Keyboard opens and *closes*
 			this.registerDomEvent(window, 'resize', this.toolbarHandler);
@@ -37,10 +40,9 @@ export default class AdvancedToolbar extends Plugin {
 		}
 		else {
 			console.log('Advanced Mobile Toolbar detected desktop Obsidian and is aborting. You still have access to change the settings.')
-			return
+			return;
 		}
 
-		addFeatherIcons(this.iconList);
 
 		this.app.workspace.onLayoutReady(() => {
 			this.updateStyles();
@@ -64,11 +66,11 @@ export default class AdvancedToolbar extends Plugin {
 		});
 
 		addEventListener("toolbarOpened", (e: CustomEvent) => this.injectHoverTooltips(e.detail.toolbar));
-
 	}
 
 	onunload() {
 		console.log('Unloading Advanced Mobile Toolbar plugin.');
+		this.removeStyles();
 	}
 
 	async loadSettings() {
@@ -89,6 +91,19 @@ export default class AdvancedToolbar extends Plugin {
 		c.toggle('AT-row', !this.settings.columnLayout);
 		c.toggle('AT-column', this.settings.columnLayout);
 		c.toggle('AT-no-toolbar', this.settings.rowCount === 0);
+	}
+
+	removeStyles() {
+		const { classList: c, style: s } = document.body;
+		s.removeProperty("--at-button-height");
+		s.removeProperty("--at-button-width");
+		s.removeProperty("--at-row-count");
+		s.removeProperty("--at-spacing");
+		c.remove('AT-multirow');
+		c.remove('AT-row');
+		c.remove('AT-column');
+		c.remove('AT-no-toolbar');
+		c.remove('advanced-toolbar');
 	}
 
 	listActiveToolbarCommands(): String[] {

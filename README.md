@@ -6,19 +6,22 @@ This Plugin enhances the Mobile Toolbar, enabling it to be always visible and to
 
 ## Custom Icons
 
-<img align="right" width="320"  src="assets/image01.png">
-
 You can add Custom Icons (even [Feather Icons](https://feathericons.com/)) to any Quick Actions that dont have their own Icon already (Please let me know if you want to change Icons of every Quick Action).
 For that just go into this Plugin's Settings and if you have any Quick Actions without Icons enabled you can change the Icon via the Button. 
 
-## Tips
+## Theme Developers
 
-I recommend using this Plugin together with [@Vinzent03](https://github.com/Vinzent03/)'s [Hotkeys for Templates](https://github.com/Vinzent03/obsidian-hotkeys-for-templates) Plugin which allows you to insert Templates via your Toolbar.
+This Plugin adds the `advanced-toolbar` CSS Class to the body if its enabled.
+You can also use the other classes and variables on body:
 
-1. Install both this and the Hotkeys for Templates Plugin
-2. In the Settings of the Hotkeys for Templates Plugin enable a Command for a Template
-3. Add it to the Toolbar in the Mobile Section of the Settings
-4. Finally add a fancy Icon using this Plugin
+- `AT-multirow`: If the toolbar has more than one row
+- `AT-row`: If the Row-Layout is enabled
+- `AT-Column`: If the Column-Layout is enabled
+- `AT-no-toolbar`: If the toolbar is disabled
+- `--at-button-height`: Height **of a row**
+- `--at-button-width`: Width **of a button**
+- `--at-row-count`: Maximal row count
+- `--at-spacing`: Spacing between buttons
 
 ## How to install
 
