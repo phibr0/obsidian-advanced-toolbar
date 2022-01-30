@@ -16,7 +16,7 @@ You can also use the other classes and variables on body:
 
 - `AT-multirow`: If the toolbar has more than one row
 - `AT-row`: If the Row-Layout is enabled
-- `AT-Column`: If the Column-Layout is enabled
+- `AT-column`: If the Column-Layout is enabled
 - `AT-no-toolbar`: If the toolbar is disabled
 - `--at-button-height`: Height **of a row**
 - `--at-button-width`: Width **of a button**
