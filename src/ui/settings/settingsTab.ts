@@ -30,6 +30,7 @@ export default class ATSettingsTab extends PluginSettingTab {
                 .setValue(this.plugin.settings.alwaysShowToolbar)
                 .onChange(async (value) => {
                     this.plugin.settings.alwaysShowToolbar = value;
+                    new Notice('Obsidian needs to be reloaded for this setting to take effect.')
                     await this.plugin.saveSettings();
                 })
             );
