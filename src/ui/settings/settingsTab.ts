@@ -7,7 +7,7 @@ export default class ATSettingsTab extends PluginSettingTab {
     constructor(app: App, plugin: AdvancedToolbar) {
         super(app, plugin);
         this.plugin = plugin;
-        addEventListener("AT-iconPicked", () => {
+        const x = addEventListener("AT-iconPicked", () => {
             this.display();
         });
     }

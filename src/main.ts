@@ -19,7 +19,7 @@ export default class AdvancedToolbar extends Plugin {
 
 	log(message: any) {
 		if (this.settings.debugging) {
-			console.log(message)
+			console.log("[Advanced Toolbar] " + message);
 		}
 	}
 
@@ -119,26 +119,23 @@ export default class AdvancedToolbar extends Plugin {
 		const commands: Command[] = [];
 		this.listActiveToolbarCommands().forEach(id => {
 			//@ts-ignore
-			commands.push(this.app.commands.commands[id]);
-		})
+			const c = this.app.commands.commands[id];
+			if(c) commands.push(c);
+		});
 		return commands;
 	}
 
 	getCommandsWithoutIcons(includeSelfAdded = true): Command[] {
 		this.log("getCommandsWithoutIcons");
 		const commands: Command[] = [];
-		this.listActiveToolbarCommands().forEach(id => {
-			//@ts-ignore
-			const c = this.app.commands.commands[id];
+		this.getCommands().forEach(c => {
 			if (c && !c.icon) {
 				commands.push(c);
-				this.log("pushed: " + c)
+				this.log("pushed: " + c);
 			}
 		});
 		if (includeSelfAdded) {
-			this.listActiveToolbarCommands().forEach(id => {
-				//@ts-ignore
-				const c = this.app.commands.commands[id];
+			this.getCommands().forEach(c => {
 				this.log(c);
 				if (this.settings.mappedIcons.find(m => m.commandID === c.id)) {
 					commands.push(c);
@@ -150,13 +147,16 @@ export default class AdvancedToolbar extends Plugin {
 
 	injectIcons() {
 		this.settings.mappedIcons.forEach(mapped => {
-			try {
-				//@ts-ignore
-				this.app.commands.commands[mapped.commandID].icon = mapped.iconID;
-			} catch (error) {
-				new Notice(error);
+			//@ts-ignore 
+			const command = this.app.commands.commands[mapped.commandID];
+			if(command) {
+				command.icon = mapped.iconID;
+			} else {
+				this.settings.mappedIcons.remove(mapped);
+				this.log("cleaned up: " + mapped.commandID);
 			}
 		});
+		this.saveSettings();
 	}
 
 	injectHoverTooltips(el: HTMLElement) {
@@ -164,7 +164,7 @@ export default class AdvancedToolbar extends Plugin {
 			const commands = this.getCommands();
 			el.firstChild.childNodes.forEach((child: HTMLElement, i: number) => {
 				child.setAttrs({
-					"aria-label": commands[i].name.replace(/.*: /, ""),
+					"aria-label": commands[i]?.name.replace(/.*: /, ""),
 					"aria-label-position": "top"
 				})
 			});
