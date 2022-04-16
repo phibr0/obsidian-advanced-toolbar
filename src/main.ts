@@ -93,6 +93,7 @@ export default class AdvancedToolbar extends Plugin {
 		c.toggle('AT-row', !this.settings.columnLayout);
 		c.toggle('AT-column', this.settings.columnLayout);
 		c.toggle('AT-no-toolbar', this.settings.rowCount === 0);
+		c.toggle('AT-always-shown', this.settings.alwaysShowToolbar);
 	}
 
 	removeStyles() {
