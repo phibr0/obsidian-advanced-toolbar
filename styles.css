@@ -13,6 +13,7 @@
 .is-mobile .mobile-toolbar {
   position: absolute;
   z-index: 5;
+  margin-bottom: var(--at-offset);
 }
 
 .AT-always-shown .is-pinned .workspace-drawer-inner {

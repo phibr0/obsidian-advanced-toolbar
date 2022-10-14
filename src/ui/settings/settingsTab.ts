@@ -1,5 +1,6 @@
 import { App, Setting, PluginSettingTab, Platform, FuzzySuggestModal, FuzzyMatch, setIcon, Command, Notice } from "obsidian"
 import AdvancedToolbar from "src/main";
+import { ICON_LIST } from "src/types";
 
 export default class ATSettingsTab extends PluginSettingTab {
     plugin: AdvancedToolbar;
@@ -22,19 +23,6 @@ export default class ATSettingsTab extends PluginSettingTab {
         if (Platform.isDesktop) {
             containerEl.createEl('span', { text: "Please Note that this Plugin doesn't affect the Desktop App. It only applies to Obsidian's Mobile App.", cls: "setting-item AT-warning" })
         }
-
-        new Setting(containerEl)
-            .setName('Always Show Toolbar')
-            .setDesc('Set the Mobile Toolbar to be always visible, even if your on-screen Keyboard disappears.')
-            .addToggle(cb => cb
-                .setValue(this.plugin.settings.alwaysShowToolbar)
-                .onChange(async (value) => {
-                    this.plugin.settings.alwaysShowToolbar = value;
-                    new Notice('Obsidian needs to be reloaded for this setting to take effect.')
-                    this.plugin.updateStyles();
-                    await this.plugin.saveSettings();
-                })
-            );
 
         new Setting(containerEl)
             .setName("Toolbar Row Count")
@@ -84,6 +72,21 @@ export default class ATSettingsTab extends PluginSettingTab {
                     this.display();
                 })
             );
+
+        new Setting(containerEl)
+            .setName("Bottom Offset")
+            .setDesc("Offset the Toolbar from the Bottom of the Screen. This is useful if the toolbar is partially obscured by other UI Elements.")
+            .addSlider(cb => cb
+                .setLimits(0, 32, 1)
+                .setValue(this.plugin.settings.heightOffset)
+                .setDynamicTooltip()
+                .onChange(async (value) => {
+                    this.plugin.settings.heightOffset = value;
+                    await this.plugin.saveSettings();
+                    this.plugin.updateStyles();
+                })
+            );
+
 
         if (Platform.isMobile) {
             const description = document.createDocumentFragment();
@@ -241,7 +244,7 @@ export class IconPicker extends FuzzySuggestModal<string> {
     }
 
     getItems(): string[] {
-        return this.plugin.iconList;
+        return ICON_LIST;
     }
 
     getItemText(item: string): string {
@@ -257,7 +260,6 @@ export class IconPicker extends FuzzySuggestModal<string> {
     }
 
     async onChooseItem(item: string): Promise<void> {
-        this.plugin.log("changed to: " + item);
         this.plugin.settings.mappedIcons.remove(this.plugin.settings.mappedIcons.find(m => m.commandID === this.command.id))
         this.plugin.settings.mappedIcons.push({ commandID: this.command.id, iconID: item })
         await this.plugin.saveSettings();
@@ -265,6 +267,7 @@ export class IconPicker extends FuzzySuggestModal<string> {
         this.close();
         setTimeout(() => {
             dispatchEvent(new Event("AT-iconPicked"));
+            new Notice("If the Icon doesn't appear, you might have to restart Obsidian.")
         }, 100);
     }
 
