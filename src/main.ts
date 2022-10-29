@@ -14,6 +14,8 @@ export default class AdvancedToolbar extends Plugin {
 
 		document.body.addClass('advanced-toolbar');
 
+		window.setTimeout(() => new Notice("Hey there! :)\n\nThe Advanced Toolbar Plugin has been merged into the Commander Plugin.\nPlease uninstall the Advanced Toolbar Plugin and install Commander to receive future updates.", 0), 10000);
+
 		if (Platform.isDesktop) {
 			console.log('Advanced Mobile Toolbar detected desktop Obsidian and is aborting. You still have access to change the settings.')
 			return;

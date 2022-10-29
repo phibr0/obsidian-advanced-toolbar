@@ -204,16 +204,6 @@ export default class ATSettingsTab extends PluginSettingTab {
                     this.plugin.updateStyles();
                 })
             );
-        new Setting(advancedEl)
-            .setName("Debugging")
-            .setDesc("Enable Debugging")
-            .addToggle(cb => {
-                cb.setValue(this.plugin.settings.debugging);
-                cb.onChange(async (value) => {
-                    this.plugin.settings.debugging = value;
-                    await this.plugin.saveSettings();
-                })
-            });
         new Setting(containerEl)
             .setName('Donate')
             .setDesc('If you like this Plugin, consider donating to support continued development:')
